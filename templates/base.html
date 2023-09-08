@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>{{ post_title }}</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="{{ url_for('static', path='/css/main_style.css') }}" rel="stylesheet">
+    <script>
+        if (localStorage.getItem('dark-mode') === 'false' || !('dark-mode' in localStorage)) {
+          document.querySelector('html').classList.remove('dark');
+        } else {
+          document.querySelector('html').classList.add('dark');
+        }
+    </script>    
+</head>
+
+<body class="
+  font-inter
+  antialiased
+  bg-white
+  text-slate-800
+  dark:bg-slate-900
+  dark:text-slate-200
+  tracking-tight"
+>
+  
+  <div class="max-w-7xl mx-auto">
+      <div class="min-h-screen flex">
+        <!-- sidebar -->
+        {% include "sidebar.html" %}
+        <!-- Main content -->
+
+        <main class="grow overflow-hidden px-6">
+            <div class="w-full h-full max-w-[1072px] mx-auto flex flex-col">
+        
+            {% include "header.html" %}
+            {% include "hero.html" %}
+            {% block content %}{% endblock %}
+
+            <!-- footer -->
+            {% include "footer.html" %}
+            </div>
+        </main>
+
+      </div>
+  </div>
+
+  <script src="{{ url_for('static', path='js/vendors/alpinejs.min.js') }}" defer></script>
+  <script src="{{ url_for('static', path='js/main.js') }}"></script>
+
+</body>
+
+</html>

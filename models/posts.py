@@ -1,6 +1,7 @@
-from sqlalchemy import func
 from sqlalchemy import (
     TEXT,
+    DateTime,
+    ForeignKey,
     Table,
     Column,
     Integer,
@@ -8,26 +9,26 @@ from sqlalchemy import (
     Text,
     VARCHAR,
     Enum,
-    DateTime,
 )
+from sqlalchemy import func
 from db import metadata_obj
 import enum
 
 
-class UserRole(enum.Enum):
-    admin = "admin"
-    editor = "editor"
+class PostStatus(enum.Enum):
+    draft = "draft"
+    published = "published"
 
 
-user = Table(
-    "user",
+posts = Table(
+    "posts",
     metadata_obj,
     Column("id", Integer, primary_key=True),
-    Column("first_name", VARCHAR(64), nullable=False),
-    Column("last_name", VARCHAR(64), nullable=False),
-    Column("user_name", VARCHAR(128), nullable=False),
-    Column("email_address", VARCHAR(128), nullable=False),
-    Column("role", Enum(UserRole), nullable=False),
+    Column("title", TEXT, nullable=False),
+    Column("description", TEXT, nullable=False),
+    Column("body", TEXT, nullable=False),
+    Column("status", Enum(PostStatus), nullable=False),
+    Column("user_id", ForeignKey("users.id")),
     Column("created_at", DateTime, server_default=func.now(), nullable=False),
     Column(
         "last_modified_at",
